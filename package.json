@@ -1,0 +1,29 @@
+{
+  "name": "chessreplay",
+  "version": "1.0.0",
+  "description": "Install Paket: https://fsprojects.github.io/Paket/get-started.html Download packages: dotnet paket install",
+  "scripts": {
+    "start": "webpack-dev-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaydpather/ChessReplay.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jaydpather/ChessReplay/issues"
+  },
+  "homepage": "https://github.com/jaydpather/ChessReplay#readme",
+  "devDependencies": {
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.10.1"
+  },
+  "dependencies": {
+    "@babel/core": "^7.8.3",
+    "fable-compiler": "^2.4.12",
+    "fable-loader": "^2.1.8"
+  }
+}

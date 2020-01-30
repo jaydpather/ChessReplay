@@ -1,0 +1,206 @@
+<!doctype html>
+<html>
+<head>
+  <title>First Fable Project</title>
+  <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    .error{
+        color:red;
+    }
+
+    .chessPiece{
+      max-width: 64px;
+    }
+
+    .cell{
+      width: 70px;
+      height: 70px;
+      display:inline-block;
+      border-top:solid 1px black;
+      border-left:solid 1px black;
+      float:left;
+      padding-top:1%;
+    }
+
+    .cell-alternate{
+      background-color:lightgrey;
+    }
+
+    .cell-right{
+      border-right:solid 1px black;
+    }
+
+    .cell-bottom{
+      border-bottom:solid 1px black;
+    }
+
+    .chessRow{
+      float:left;
+      clear:left;
+    }
+
+    .chessBoard{
+    }
+  </style>
+
+</head>
+<body>
+    <p id="myParagraph">
+        This is my content here.
+    </p>
+
+    <div class="chessBoard">
+      <div class="chessRow">
+        <div class="cell">
+          <img src="images/rook-black.png" class="chessPiece" />
+        </div>
+        <div class="cell cell-alternate">
+          <img src="images/knight-black.png" class="chessPiece" />
+        </div>
+        <div class="cell">
+          <img src="images/bishop-black.png" class="chessPiece" />
+        </div>
+        <div class="cell cell-alternate">
+          <img src="images/queen-black.png" class="chessPiece" />
+        </div>
+        <div class="cell">
+          <img src="images/king-black.png" class="chessPiece" />
+        </div>
+        <div class="cell cell-alternate">
+          <img src="images/bishop-black.png" class="chessPiece" />
+        </div>
+        <div class="cell">
+          <img src="images/knight-black.png" class="chessPiece" />
+        </div>
+        <div class="cell cell-alternate cell-right">
+          <img src="images/rook-black.png" class="chessPiece" />
+        </div>
+      </div>
+      <div class="chessRow">
+        <div class="cell cell-alternate">
+          <img src="images/pawn-black.png" class="chessPiece" />
+        </div>
+        <div class="cell">
+          <img src="images/pawn-black.png" class="chessPiece" />
+        </div>
+        <div class="cell cell-alternate">
+          <img src="images/pawn-black.png" class="chessPiece" />
+        </div>
+        <div class="cell">
+          <img src="images/pawn-black.png" class="chessPiece" />
+        </div>
+        <div class="cell cell-alternate">
+          <img src="images/pawn-black.png" class="chessPiece" />
+        </div>
+        <div class="cell">
+          <img src="images/pawn-black.png" class="chessPiece" />
+        </div>
+        <div class="cell cell-alternate">
+          <img src="images/pawn-black.png" class="chessPiece" />
+        </div>
+        <div class="cell cell-right">
+          <img src="images/pawn-black.png" class="chessPiece" />
+        </div>
+      </div>
+      <div class="chessRow">
+        <div class="cell"></div>
+        <div class="cell cell-alternate"></div>
+        <div class="cell"></div>
+        <div class="cell cell-alternate"></div>
+        <div class="cell"></div>
+        <div class="cell cell-alternate"></div>
+        <div class="cell"></div>
+        <div class="cell cell-alternate cell-right"></div>
+      </div>
+      <div class="chessRow">
+        <div class="cell cell-alternate"></div>
+        <div class="cell"></div>
+        <div class="cell cell-alternate"></div>
+        <div class="cell"></div>
+        <div class="cell cell-alternate"></div>
+        <div class="cell"></div>
+        <div class="cell cell-alternate"></div>
+        <div class="cell cell-right"></div>
+      </div>
+      <div class="chessRow">
+        <div class="cell"></div>
+        <div class="cell cell-alternate"></div>
+        <div class="cell"></div>
+        <div class="cell cell-alternate"></div>
+        <div class="cell"></div>
+        <div class="cell cell-alternate"></div>
+        <div class="cell"></div>
+        <div class="cell cell-alternate cell-right"></div>
+      </div>
+      <div class="chessRow">
+        <div class="cell cell-alternate"></div>
+        <div class="cell"></div>
+        <div class="cell cell-alternate"></div>
+        <div class="cell"></div>
+        <div class="cell cell-alternate"></div>
+        <div class="cell"></div>
+        <div class="cell cell-alternate"></div>
+        <div class="cell cell-right"></div>
+      </div>
+      <div class="chessRow">
+        <div class="cell">
+          <img src="images/pawn-white.png" class="chessPiece" />
+        </div>
+        <div class="cell cell-alternate">
+          <img src="images/pawn-white.png" class="chessPiece" />
+        </div>
+        <div class="cell">
+          <img src="images/pawn-white.png" class="chessPiece" />
+        </div>
+        <div class="cell cell-alternate">
+          <img src="images/pawn-white.png" class="chessPiece" />
+        </div>
+        <div class="cell">
+          <img src="images/pawn-white.png" class="chessPiece" />
+        </div>
+        <div class="cell cell-alternate">
+          <img src="images/pawn-white.png" class="chessPiece" />
+        </div>
+        <div class="cell">
+          <img src="images/pawn-white.png" class="chessPiece" />
+        </div>
+        <div class="cell cell-alternate cell-right">
+          <img src="images/pawn-white.png" class="chessPiece" />
+        </div>
+      </div>
+      <div class="chessRow">
+        <div class="cell cell-alternate cell-bottom">
+          <img src="images/rook-white.png" class="chessPiece" />
+        </div>
+        <div class="cell cell-bottom">
+          <img src="images/knight-white.png" class="chessPiece" />
+        </div>
+        <div class="cell cell-alternate cell-bottom">
+          <img src="images/bishop-white.png" class="chessPiece" />
+        </div>
+        <div class="cell cell-bottom">
+          <img src="images/queen-white.png" class="chessPiece" />
+        </div>
+        <div class="cell cell-alternate cell-bottom">
+          <img src="images/king-white.png" class="chessPiece" />
+        </div>
+        <div class="cell cell-bottom">
+          <img src="images/bishop-white.png" class="chessPiece" />
+        </div>
+        <div class="cell cell-alternate cell-bottom">
+          <img src="images/knight-white.png" class="chessPiece" />
+        </div>
+        <div class="cell cell-right cell-bottom">
+          <img src="images/rook-white.png" class="chessPiece" />
+        </div>
+      </div>
+    </div>
+    <div style="float:left; clear:left;">
+      <br /> <br />
+      Icons made by <a href="https://www.flaticon.com/authors/vitaly-gorbachev" title="Vitaly Gorbachev">Vitaly Gorbachev</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+    </div>
+
+    <script src="bundle.js"></script>
+</body>
+</html>
