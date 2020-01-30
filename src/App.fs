@@ -9,10 +9,6 @@ open Fable.Core.Util
 let alert msg = jsNative
 
 let window = Browser.Dom.window
-let myParagraph:Browser.Types.HTMLParagraphElement = unbox window.document.getElementById "myParagraph"
-
-
-myParagraph.className <- "error"
 
 //alert "hello from chess replay"
 

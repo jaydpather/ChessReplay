@@ -13,6 +13,15 @@
       max-width: 64px;
     }
 
+    .coordinate{
+      width: 70px;
+      height: 70px;
+      display:table-cell;
+      float:left;
+      text-align: center;
+      vertical-align: middle;
+    }
+
     .cell{
       width: 70px;
       height: 70px;
@@ -46,155 +55,213 @@
 
 </head>
 <body>
-    <p id="myParagraph">
-        This is my content here.
-    </p>
-
     <div class="chessBoard">
       <div class="chessRow">
-        <div class="cell">
+        <div class="coordinate">
+          <br />
+          8
+        </div>
+        <div id="A8" class="cell">
           <img src="images/rook-black.png" class="chessPiece" />
         </div>
-        <div class="cell cell-alternate">
+        <div id="B8" class="cell cell-alternate">
           <img src="images/knight-black.png" class="chessPiece" />
         </div>
-        <div class="cell">
+        <div id="C8" class="cell">
           <img src="images/bishop-black.png" class="chessPiece" />
         </div>
-        <div class="cell cell-alternate">
+        <div id="D8" class="cell cell-alternate">
           <img src="images/queen-black.png" class="chessPiece" />
         </div>
-        <div class="cell">
+        <div id="E8" class="cell">
           <img src="images/king-black.png" class="chessPiece" />
         </div>
-        <div class="cell cell-alternate">
+        <div id="F8" class="cell cell-alternate">
           <img src="images/bishop-black.png" class="chessPiece" />
         </div>
-        <div class="cell">
+        <div id="G8" class="cell">
           <img src="images/knight-black.png" class="chessPiece" />
         </div>
-        <div class="cell cell-alternate cell-right">
+        <div id="H8" class="cell cell-alternate cell-right">
           <img src="images/rook-black.png" class="chessPiece" />
         </div>
       </div>
       <div class="chessRow">
-        <div class="cell cell-alternate">
+        <div class="coordinate">
+          <br />
+          7
+        </div>
+        <div id="A7" class="cell cell-alternate">
           <img src="images/pawn-black.png" class="chessPiece" />
         </div>
-        <div class="cell">
+        <div id="B7" class="cell">
           <img src="images/pawn-black.png" class="chessPiece" />
         </div>
-        <div class="cell cell-alternate">
+        <div id="C7" class="cell cell-alternate">
           <img src="images/pawn-black.png" class="chessPiece" />
         </div>
-        <div class="cell">
+        <div id="D7" class="cell">
           <img src="images/pawn-black.png" class="chessPiece" />
         </div>
-        <div class="cell cell-alternate">
+        <div id="E7" class="cell cell-alternate">
           <img src="images/pawn-black.png" class="chessPiece" />
         </div>
-        <div class="cell">
+        <div id="F7" class="cell">
           <img src="images/pawn-black.png" class="chessPiece" />
         </div>
-        <div class="cell cell-alternate">
+        <div id="G7" class="cell cell-alternate">
           <img src="images/pawn-black.png" class="chessPiece" />
         </div>
-        <div class="cell cell-right">
+        <div id="H7" class="cell cell-right">
           <img src="images/pawn-black.png" class="chessPiece" />
         </div>
       </div>
       <div class="chessRow">
-        <div class="cell"></div>
-        <div class="cell cell-alternate"></div>
-        <div class="cell"></div>
-        <div class="cell cell-alternate"></div>
-        <div class="cell"></div>
-        <div class="cell cell-alternate"></div>
-        <div class="cell"></div>
-        <div class="cell cell-alternate cell-right"></div>
+        <div class="coordinate">
+          <br />
+          6
+        </div>
+        <div id="A6" class="cell"></div>
+        <div id="B6" class="cell cell-alternate"></div>
+        <div id="C6" class="cell"></div>
+        <div id="D6" class="cell cell-alternate"></div>
+        <div id="E6" class="cell"></div>
+        <div id="F6" class="cell cell-alternate"></div>
+        <div id="G6" class="cell"></div>
+        <div id="H6" class="cell cell-alternate cell-right"></div>
       </div>
       <div class="chessRow">
-        <div class="cell cell-alternate"></div>
-        <div class="cell"></div>
-        <div class="cell cell-alternate"></div>
-        <div class="cell"></div>
-        <div class="cell cell-alternate"></div>
-        <div class="cell"></div>
-        <div class="cell cell-alternate"></div>
-        <div class="cell cell-right"></div>
+        <div class="coordinate">
+          <br />
+          5
+        </div>
+        <div id="A5" class="cell cell-alternate"></div>
+        <div id="B5" class="cell"></div>
+        <div id="C5" class="cell cell-alternate"></div>
+        <div id="D5" class="cell"></div>
+        <div id="E5" class="cell cell-alternate"></div>
+        <div id="F5" class="cell"></div>
+        <div id="G5" class="cell cell-alternate"></div>
+        <div id="H5" class="cell cell-right"></div>
       </div>
       <div class="chessRow">
-        <div class="cell"></div>
-        <div class="cell cell-alternate"></div>
-        <div class="cell"></div>
-        <div class="cell cell-alternate"></div>
-        <div class="cell"></div>
-        <div class="cell cell-alternate"></div>
-        <div class="cell"></div>
-        <div class="cell cell-alternate cell-right"></div>
+        <div class="coordinate">
+          <br />
+          4
+        </div>
+        <div id="A4" class="cell"></div>
+        <div id="B4" class="cell cell-alternate"></div>
+        <div id="C4" class="cell"></div>
+        <div id="D4" class="cell cell-alternate"></div>
+        <div id="E4" class="cell"></div>
+        <div id="F4" class="cell cell-alternate"></div>
+        <div id="G4" class="cell"></div>
+        <div id="H4" class="cell cell-alternate cell-right"></div>
       </div>
       <div class="chessRow">
-        <div class="cell cell-alternate"></div>
-        <div class="cell"></div>
-        <div class="cell cell-alternate"></div>
-        <div class="cell"></div>
-        <div class="cell cell-alternate"></div>
-        <div class="cell"></div>
-        <div class="cell cell-alternate"></div>
-        <div class="cell cell-right"></div>
+        <div class="coordinate">
+          <br />
+          3
+        </div>
+        <div id="A3" class="cell cell-alternate"></div>
+        <div id="B3" class="cell"></div>
+        <div id="C3" class="cell cell-alternate"></div>
+        <div id="D3" class="cell"></div>
+        <div id="E3" class="cell cell-alternate"></div>
+        <div id="F3" class="cell"></div>
+        <div id="G3" class="cell cell-alternate"></div>
+        <div id="H3" class="cell cell-right"></div>
       </div>
       <div class="chessRow">
-        <div class="cell">
+        <div class="coordinate">
+          <br />
+          2
+        </div>
+        <div id="A2" class="cell">
           <img src="images/pawn-white.png" class="chessPiece" />
         </div>
-        <div class="cell cell-alternate">
+        <div id="B2" class="cell cell-alternate">
           <img src="images/pawn-white.png" class="chessPiece" />
         </div>
-        <div class="cell">
+        <div id="C2" class="cell">
           <img src="images/pawn-white.png" class="chessPiece" />
         </div>
-        <div class="cell cell-alternate">
+        <div id="D2" class="cell cell-alternate">
           <img src="images/pawn-white.png" class="chessPiece" />
         </div>
-        <div class="cell">
+        <div id="E2" class="cell">
           <img src="images/pawn-white.png" class="chessPiece" />
         </div>
-        <div class="cell cell-alternate">
+        <div id="F2" class="cell cell-alternate">
           <img src="images/pawn-white.png" class="chessPiece" />
         </div>
-        <div class="cell">
+        <div id="G2" class="cell">
           <img src="images/pawn-white.png" class="chessPiece" />
         </div>
-        <div class="cell cell-alternate cell-right">
+        <div id="H2" class="cell cell-alternate cell-right">
           <img src="images/pawn-white.png" class="chessPiece" />
         </div>
       </div>
       <div class="chessRow">
-        <div class="cell cell-alternate cell-bottom">
+        <div class="coordinate">
+          <br />
+          1
+        </div>
+        <div id="A1" class="cell cell-alternate cell-bottom">
           <img src="images/rook-white.png" class="chessPiece" />
         </div>
-        <div class="cell cell-bottom">
+        <div id="B1" class="cell cell-bottom">
           <img src="images/knight-white.png" class="chessPiece" />
         </div>
-        <div class="cell cell-alternate cell-bottom">
+        <div id="C1" class="cell cell-alternate cell-bottom">
           <img src="images/bishop-white.png" class="chessPiece" />
         </div>
-        <div class="cell cell-bottom">
+        <div id="D1" class="cell cell-bottom">
           <img src="images/queen-white.png" class="chessPiece" />
         </div>
-        <div class="cell cell-alternate cell-bottom">
+        <div id="E1" class="cell cell-alternate cell-bottom">
           <img src="images/king-white.png" class="chessPiece" />
         </div>
-        <div class="cell cell-bottom">
+        <div id="F1" class="cell cell-bottom">
           <img src="images/bishop-white.png" class="chessPiece" />
         </div>
-        <div class="cell cell-alternate cell-bottom">
+        <div id="G1" class="cell cell-alternate cell-bottom">
           <img src="images/knight-white.png" class="chessPiece" />
         </div>
-        <div class="cell cell-right cell-bottom">
+        <div id="H1" class="cell cell-right cell-bottom">
           <img src="images/rook-white.png" class="chessPiece" />
         </div>
       </div>
+      <div class="chessRow">
+        <div class="coordinate">
+          <!-- need an empty space here b/c of number coords on left side -->
+        </div>
+        <div class="coordinate">
+          A
+        </div>
+        <div class="coordinate">
+          B
+        </div>
+        <div class="coordinate">
+          C
+        </div>
+        <div class="coordinate">
+          D
+        </div>
+        <div class="coordinate">
+          E
+        </div>
+        <div class="coordinate">
+          F
+        </div>
+        <div class="coordinate">
+          G
+        </div>
+        <div class="coordinate">
+          H
+        </div>
+      </div>
+
     </div>
     <div style="float:left; clear:left;">
       <br /> <br />
