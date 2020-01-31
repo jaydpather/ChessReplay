@@ -6,6 +6,9 @@
     <ProjectReference Include="..\Model\Model.fsproj">
       <Name>Model.fsproj</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Data\Data.fsproj">
+      <Name>Data.fsproj</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Logic.fs" />

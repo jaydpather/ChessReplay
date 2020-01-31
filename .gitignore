@@ -3,6 +3,7 @@ src/obj/
 src/Logic/obj/
 src/Model/obj/
 src/UI/obj/
+src/Data/obj/
 
 #ionide
 .ionide/

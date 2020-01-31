@@ -4,7 +4,7 @@ open Fable.Import
 
 open Model
 
-let mutable moveList: Move list = Logic.getAllMoves ()
+let mutable moveList: Move list = Logic.getAllMoves_Old ()
 
 let executeNextMove () = 
     let (nextMove, remainingMoves) = Logic.getNextMove moveList
@@ -14,12 +14,16 @@ let executeNextMove () =
         Cells.moveCellContents move.CellFrom move.CellTo
     | None -> ()
 
-    
-
 let btnMove_Click e = 
     executeNextMove ()
 
 let btnMove:Browser.Types.HTMLButtonElement = DOM.getButtonElementById "btnMove"
 btnMove.onclick <- btnMove_Click
 
-printfn "page loaded"
+let allMoves = Logic.getAllMoves ()
+
+allMoves.ToString()
+|> printfn "%s" 
+
+
+//printfn "page loaded"
