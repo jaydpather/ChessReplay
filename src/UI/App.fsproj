@@ -11,7 +11,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MyAwesomeFeature.fs" />
+    <Compile Include="DOM.fs" />
+    <Compile Include="Cells.fs" />
     <Compile Include="App.fs" />
   </ItemGroup>
   <ItemGroup>
