@@ -4,11 +4,17 @@ open Fable.Import
 
 open Model
 
-//let mutable moveList: Move list = []
+let mutable moveList: Move list = Logic.getAllMoves ()
 
 let executeNextMove () = 
-    let nextMove = Logic.getNextMove ()
-    Cells.moveCellContents nextMove.CellFrom nextMove.CellTo
+    let (nextMove, remainingMoves) = Logic.getNextMove moveList
+    match nextMove with 
+    | Some move -> 
+        moveList <- remainingMoves
+        Cells.moveCellContents move.CellFrom move.CellTo
+    | None -> ()
+
+    
 
 let btnMove_Click e = 
     executeNextMove ()
