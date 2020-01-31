@@ -3,7 +3,14 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="../Shared/Authentication.fs" />
+    <ProjectReference Include="..\Logic\Logic.fsproj">
+      <Name>Logic.fsproj</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Model\Model.fsproj">
+      <Name>Model.fsproj</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="MyAwesomeFeature.fs" />
     <Compile Include="App.fs" />
   </ItemGroup>

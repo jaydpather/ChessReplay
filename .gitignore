@@ -1,3 +1,9 @@
+#bin and obj
+src/obj/
+src/Logic/obj/
+src/Model/obj/
+src/UI/obj/
+
 #ionide
 .ionide/
 
