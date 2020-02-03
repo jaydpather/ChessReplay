@@ -19,11 +19,23 @@ let getAllMoves_Old ():MoveViewModel list =
         }
     ]
 
-let getStartingLocation move locationA locationB = 
-    ()
+let getViewModelFromModel model =
+    let legalStartingPoints = model.PieceMoved.GetLegalStartingPoints model.CellTo
+    printfn "%A" legalStartingPoints
+    // let viewModel = {
+    //     CellTo = model.CellTo;
+    //     CellFrom = 
+    // }
+    0
 
 let getAllMoves_FromModel () =
-    ()
+    let model = {
+        Player = White;
+        CellTo = (A, Three);
+        PieceMoved = PieceFactory.createKnight ();
+        PieceCaptured = None
+    }
+    getViewModelFromModel model
 
 let parseMoveText moveText = 
     (*We will match the following format:

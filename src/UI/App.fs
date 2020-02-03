@@ -22,6 +22,8 @@ btnMove.onclick <- btnMove_Click
 
 let allMoves = Logic.getAllMoves ()
 
+let test = Logic.getAllMoves_FromModel ()
+
 allMoves.ToString()
 |> printfn "%s" 
 
