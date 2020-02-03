@@ -12,5 +12,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Logic.fs" />
+    <Compile Include="PieceFactory.fs" />
   </ItemGroup>
 </Project>

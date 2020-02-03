@@ -4,12 +4,12 @@ open Fable.Import
 
 open Model
 
-let mutable moveList: Move list = Logic.getAllMoves_Old ()
+let mutable moveList: MoveViewModel list = Logic.getAllMoves_Old ()
 
 let executeNextMove () = 
     let (nextMove, remainingMoves) = Logic.getNextMove moveList
     match nextMove with 
-    | Some move -> 
+    | Some (move:MoveViewModel) -> 
         moveList <- remainingMoves
         Cells.moveCellContents move.CellFrom move.CellTo
     | None -> ()

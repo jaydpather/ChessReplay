@@ -2,28 +2,28 @@
 
 open Model
 
-let getNextMove (moves:Move list) = 
+let getNextMove (moves:MoveViewModel list) = 
     match moves with 
     | head::tail -> (Some moves.Head, moves.Tail)
     | [] -> (None, []) //using moves instead of [] would avoid creating a new object
 
-let getAllMoves_Old () = 
+let getAllMoves_Old ():MoveViewModel list = 
     [
         {
-            Player = White;
-            PieceMoved = Pawn;
-            PieceCaptured = None;
             CellFrom = (E, Two);
             CellTo = (E, Four);
         };
         {
-            Player = Black;
-            PieceMoved = Pawn;
-            PieceCaptured = None;
             CellFrom = (E, Seven);
             CellTo = (E, Six);
         }
     ]
+
+let getStartingLocation move locationA locationB = 
+    ()
+
+let getAllMoves_FromModel () =
+    ()
 
 let parseMoveText moveText = 
     (*We will match the following format:

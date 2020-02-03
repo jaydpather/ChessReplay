@@ -9,12 +9,23 @@ type Column = A | B | C | D | E | F | G | H
 
 type Coordinate = Column * Row
 
-type Piece = Pawn | Rook | Knight | Bishop | Queen | King
+type PieceType = Pawn | Rook | Knight | Bishop | Queen | King
+
+type Piece = {
+    PieceType: PieceType;
+    GetLegalStartingPoints: Coordinate -> Coordinate list
+}
+
+//todo: move to ViewModel project
+type MoveViewModel = {
+    CellFrom: Coordinate;
+    CellTo: Coordinate;
+}
+
 
 type Move = {
     Player : Player;
-    CellFrom: Coordinate;
     CellTo: Coordinate;
     PieceMoved: Piece;
-    PieceCaptured: Piece option;
+    PieceCaptured: PieceType option;
 }
