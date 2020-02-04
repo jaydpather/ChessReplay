@@ -1,11 +1,15 @@
 module Parser
 
 open System.Text.RegularExpressions
+open System
 
 let filterMatch lstResults (curMatch:Match) = 
     match curMatch.Success with
     | true -> curMatch.Value :: lstResults
     | false -> lstResults
+
+let removeString (input:string) strToRemove =
+    (input.Replace(strToRemove, String.Empty))
 
 let parseMoveText moveText = 
     (*We will match the following format:
@@ -23,8 +27,13 @@ let parseMoveText moveText =
         matches
         |> Seq.cast
         |> List.ofSeq
-    let results = List.fold filterMatch [] matchList
-    results
+
+    let validMatches = List.filter (fun (x:Match) -> x.Success) matchList
+    let validMoveStrings = List.map (fun (x:Match) -> x.Value) validMatches
+
+    let invalidMoveText = List.fold removeString moveText validMoveStrings
+
+    (validMoveStrings, invalidMoveText)
 
 
 //K (king), Q (queen), R (rook), B (bishop), and N (knight).

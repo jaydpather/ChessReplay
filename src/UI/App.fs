@@ -28,9 +28,11 @@ allMoves.ToString()
 Logic.getAllMoves_FromModel ()
 |> printfn "legal starting points for Knight to A3: %s %A" Environment.NewLine
 
-let movesFromText:string list = Logic.getAllMoves_FromText ()
-movesFromText
-|> printfn "all moves (from text): %s %A" Environment.NewLine 
+let (validMoves:string list, invalidMoves:string) = Logic.getAllMoves_FromText ()
+validMoves
+|> printfn "valid moves (from text): %s %A" Environment.NewLine 
+invalidMoves
+|> printfn "invalid moves (from text): %s %s" Environment.NewLine 
 
 
 
