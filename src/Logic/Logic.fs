@@ -7,7 +7,7 @@ let getNextMove (moves:MoveViewModel list) =
     | head::tail -> (Some moves.Head, moves.Tail)
     | [] -> (None, []) //using moves instead of [] would avoid creating a new object
 
-let getAllMoves_Old ():MoveViewModel list = 
+let getAllMoves_FromViewModel ():MoveViewModel list = 
     [
         {
             CellFrom = (E, Two);
@@ -19,7 +19,7 @@ let getAllMoves_Old ():MoveViewModel list =
         }
     ]
 
-let getViewModelFromModel model =
+let private getViewModelFromModel model =
     let legalStartingPoints = model.PieceMoved.GetLegalStartingPoints model.CellTo
     printfn "%A" legalStartingPoints
     // let viewModel = {
@@ -37,7 +37,7 @@ let getAllMoves_FromModel () =
     }
     getViewModelFromModel model
 
-let parseMoveText moveText = 
+let private parseMoveText moveText = 
     (*We will match the following format:
     (this is a pair of moves by white and black)
         * a digit, dot and space 
@@ -49,7 +49,7 @@ let parseMoveText moveText =
     let regex = "\d. \w{2,3} \w{2,3} "
     System.Text.RegularExpressions.Regex.Matches(moveText, regex)
 
-let getAllMoves () = 
+let getAllMoves_FromText () = 
     let moveText = Data.loadAllMoves "pgns/example.pgn"
     parseMoveText moveText
 

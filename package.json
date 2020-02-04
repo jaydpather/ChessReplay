@@ -4,6 +4,7 @@
   "description": "Install Paket: https://fsprojects.github.io/Paket/get-started.html Download packages: dotnet paket install",
   "scripts": {
     "start": "webpack-dev-server",
+    "build": "webpack --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

@@ -4,7 +4,7 @@ open Fable.Import
 
 open Model
 
-let mutable moveList: MoveViewModel list = Logic.getAllMoves_Old ()
+let mutable moveList: MoveViewModel list = Logic.getAllMoves_FromViewModel ()
 
 let executeNextMove () = 
     let (nextMove, remainingMoves) = Logic.getNextMove moveList
@@ -20,7 +20,7 @@ let btnMove_Click e =
 let btnMove:Browser.Types.HTMLButtonElement = DOM.getButtonElementById "btnMove"
 btnMove.onclick <- btnMove_Click
 
-let allMoves = Logic.getAllMoves ()
+let allMoves = Logic.getAllMoves_FromViewModel ()
 
 let test = Logic.getAllMoves_FromModel ()
 
