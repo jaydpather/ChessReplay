@@ -1,5 +1,6 @@
 module AppOld
 
+open System
 open Fable.Import
 
 open Model
@@ -21,11 +22,16 @@ let btnMove:Browser.Types.HTMLButtonElement = DOM.getButtonElementById "btnMove"
 btnMove.onclick <- btnMove_Click
 
 let allMoves = Logic.getAllMoves_FromViewModel ()
-
-let test = Logic.getAllMoves_FromModel ()
-
 allMoves.ToString()
-|> printfn "%s" 
+|> printfn "all moves (from view model): %s %s" Environment.NewLine
+
+Logic.getAllMoves_FromModel ()
+|> printfn "legal starting points for Knight to A3: %s %A" Environment.NewLine
+
+let movesFromText:System.Text.RegularExpressions.MatchCollection = Logic.getAllMoves_FromText ()
+movesFromText.ToString()
+|> printfn "all moves (from text): %s %s" Environment.NewLine 
+
 
 
 //printfn "page loaded"

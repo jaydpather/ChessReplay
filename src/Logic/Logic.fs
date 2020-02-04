@@ -21,12 +21,11 @@ let getAllMoves_FromViewModel ():MoveViewModel list =
 
 let private getViewModelFromModel model =
     let legalStartingPoints = model.PieceMoved.GetLegalStartingPoints model.CellTo
-    printfn "%A" legalStartingPoints
+    legalStartingPoints
     // let viewModel = {
     //     CellTo = model.CellTo;
     //     CellFrom = 
     // }
-    0
 
 let getAllMoves_FromModel () =
     let model = {
@@ -37,21 +36,10 @@ let getAllMoves_FromModel () =
     }
     getViewModelFromModel model
 
-let private parseMoveText moveText = 
-    (*We will match the following format:
-    (this is a pair of moves by white and black)
-        * a digit, dot and space 
-        * a group of alphanumeric chars of length 2 or 3
-        * a space
-        * a group of alphanumeric chars of length 2 or 3
-        * a space
-    *)
-    let regex = "\d. \w{2,3} \w{2,3} "
-    System.Text.RegularExpressions.Regex.Matches(moveText, regex)
 
 let getAllMoves_FromText () = 
     let moveText = Data.loadAllMoves "pgns/example.pgn"
-    parseMoveText moveText
+    Parser.parseMoveText moveText
 
 
 (*
