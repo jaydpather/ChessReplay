@@ -28,12 +28,7 @@ allMoves.ToString()
 Logic.getAllMoves_FromModel ()
 |> printfn "legal starting points for Knight to A3: %s %A" Environment.NewLine
 
-let (validMoves:string list, invalidMoves:string list) = Logic.getAllMoves_FromText ()
-validMoves
-|> printfn "valid moves (from text): %s %A" Environment.NewLine 
-invalidMoves
-|> printfn "invalid moves (from text): %s %A" Environment.NewLine 
-
-
+let viewState = Logic.getAllMoves_FromText ()
+printfn "loaded moves from text. ViewState: %s %A" Environment.NewLine viewState
 
 //printfn "page loaded"

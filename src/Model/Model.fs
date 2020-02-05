@@ -21,10 +21,15 @@ type MoveViewModel = {
     CellTo: Coordinate;
 }
 
-
 type Move = {
-    Player : Player;
+    Player: Player;
     CellTo: Coordinate;
     PieceMoved: Piece;
     PieceCaptured: PieceType option;
+}
+
+type ViewState = {
+    ErrorMessage: string;
+    CanViewNextMove: bool;
+    Moves: string list;
 }
