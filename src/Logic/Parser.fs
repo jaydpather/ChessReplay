@@ -3,13 +3,11 @@ module Parser
 open System.Text.RegularExpressions
 open System
 
+//todo: do we even need this function? seems like it only returns Matches where Success = true
 let filterMatch lstResults (curMatch:Match) = 
     match curMatch.Success with
     | true -> curMatch.Value :: lstResults
     | false -> lstResults
-
-let removeString (input:string) strToRemove =
-    (input.Replace(strToRemove, String.Empty))
 
 let parseMoveText moveText = 
     (*We will match the following format:
@@ -20,6 +18,7 @@ let parseMoveText moveText =
         * a group of alphanumeric chars of length 2 or 3
         * a space
     *)
+    //\d\. ([KQRBN]{0,1}[a-h][1-8] ){2,2}
     let regex = "\d. \w{2,3} \w{2,3} "
     let matches = Regex.Matches(moveText, regex)
 
@@ -31,9 +30,13 @@ let parseMoveText moveText =
     let validMatches = List.filter (fun (x:Match) -> x.Success) matchList
     let validMoveStrings = List.map (fun (x:Match) -> x.Value) validMatches
 
-    let invalidMoveText = List.fold removeString moveText validMoveStrings
+    let splitMoveText = Regex.Split(moveText, regex)
+    let filterBlankStrings = String.IsNullOrEmpty >> not 
+    let invalidMoveStrings = 
+        Array.filter filterBlankStrings splitMoveText
+        |> Array.toList
 
-    (validMoveStrings, invalidMoveText)
+    (validMoveStrings, invalidMoveStrings)
 
 
 //K (king), Q (queen), R (rook), B (bishop), and N (knight).
