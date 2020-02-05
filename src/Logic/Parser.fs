@@ -18,9 +18,9 @@ let parseMoveText moveText =
         * a group of alphanumeric chars of length 2 or 3
         * a space
     *)
-    //\d\. ([KQRBN]{0,1}[a-h][1-8] ){2,2}
-    let regex = "\d. \w{2,3} \w{2,3} "
-    let matches = Regex.Matches(moveText, regex)
+
+    let regexPattern = "\d\. [KQRBN]{0,1}[a-h][1-8] [KQRBN]{0,1}[a-h][1-8] "
+    let matches = Regex.Matches(moveText, regexPattern)
 
     let matchList = 
         matches
@@ -30,7 +30,7 @@ let parseMoveText moveText =
     let validMatches = List.filter (fun (x:Match) -> x.Success) matchList
     let validMoveStrings = List.map (fun (x:Match) -> x.Value) validMatches
 
-    let splitMoveText = Regex.Split(moveText, regex)
+    let splitMoveText = Regex.Split(moveText, regexPattern)
     let filterBlankStrings = String.IsNullOrEmpty >> not 
     let invalidMoveStrings = 
         Array.filter filterBlankStrings splitMoveText
