@@ -31,5 +31,11 @@ type Move = {
 type ViewState = {
     ErrorMessage: string;
     CanViewNextMove: bool;
+    Moves: (Move * Move) list;
+}
+
+type ViewErrorState = {
+    ErrorMessage: string;
+    CanViewNextMove: bool;
     Moves: string list;
 }

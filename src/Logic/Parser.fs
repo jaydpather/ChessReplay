@@ -11,20 +11,6 @@ let private filterMatch lstResults (curMatch:Match) =
     | true -> curMatch.Value :: lstResults
     | false -> lstResults
 
-(*
-PLAN OF ACTION
-    * make StateChecker function. (use built-in .NET result)
-    * new function: validateMoveText
-        * returns Success of string list or Failure of string list
-        * Logic layer checks for success/failure and returns new state:
-            * ErrorMessage (string)
-            * btnNextMoveEnabled (bool)
-        * App.fs updates btnNextMove and lblErrMsg. (new file for this?)        
-    * new function: parseMoveText
-        * takes a string list
-        * returns a Move list    
-*)
-
 let private getInvalidMoves regexPattern moveText  = 
     let splitMoveText = Regex.Split(moveText, regexPattern)
     let filterBlankStrings = String.IsNullOrEmpty >> not 
@@ -54,8 +40,8 @@ let parsePlayerMoveString player playerMoveString =
     let toColumnStr = Regex.Match(playerMoveString, patternColumn).Value
     let toRowStr = Regex.Match(playerMoveString, patternRow).Value
 
-    printfn "piece type %s, column: %s, row: %s" pieceTypeStr toColumnStr toRowStr
-
+    //todo: make these fromString methods throw exceptions instead of returning Option
+    //  then you don't have to deal with all this optional stuff
     let pieceTypeOpt = PieceType.fromString pieceTypeStr
     let toColumnOpt = Column.fromString toColumnStr
     let toRowOpt = Row.fromString toRowStr
@@ -71,7 +57,7 @@ let parsePlayerMoveString player playerMoveString =
                 CellTo = (column, row);
                 PieceCaptured = None
             }
-    printfn "player move: %A" playerMove
+    playerMove
 
 
 let parseMoveString move = 
@@ -86,6 +72,33 @@ let parseMoveString move =
     
     (firstMoveString, secondMoveString)
 
+let parseValidatedMoves validMoveStrings = 
+    let parsePairOfPlayerMoveStrings pair = 
+        let (first, second) = pair
+        let whiteMove = parsePlayerMoveString White first
+        let blackMove = parsePlayerMoveString Black second
+        (whiteMove, blackMove)
+
+    let moveOptPairs = 
+        List.map parseMoveString validMoveStrings
+        |> List.map parsePairOfPlayerMoveStrings        
+
+    let findSomes = fun lst pair ->
+        match pair with 
+        | (Some x, Some y) -> (x,y) :: lst
+        | (_, _) -> lst
+
+    let movePairs = 
+        List.fold findSomes [] moveOptPairs
+        |> List.rev
+
+    match movePairs.Length = moveOptPairs.Length with
+    | true -> movePairs |> Ok
+    | false -> Error {
+            ErrorMessage = "found some invalid moves";
+            CanViewNextMove = false;
+            Moves = []
+        } //todo: how to report this error? how to include invalid moves?
 
 
 let parseMoveText moveText = 
@@ -100,19 +113,20 @@ let parseMoveText moveText =
     let invalidMoveStrings = getInvalidMoves regexPattern moveText
     let getValidMovesFunc = fun () -> getValidMoves regexPattern moveText
 
-    let retVal = 
+    let validateResult = 
         match invalidMoveStrings.Length with 
         | 0 -> getValidMovesFunc () |> Ok 
         | numErrors -> invalidMoveStrings |> Error
-
-    ////////////////////////////////////
+    //todo: use a monad to check for failure of validation
     
-    let foo = 
-        match retVal with 
-        | Ok moves -> 
-            let (whiteMoveStr, blackMoveStr) = parseMoveString moves.Head
-            parsePlayerMoveString White whiteMoveStr
-        | _ -> ()
-    /////////////////////////////////////    
+    let parseResult = 
+        match validateResult with 
+        | Ok validMoveStrings -> 
+            parseValidatedMoves validMoveStrings
+        | Error invalidMoveStrings -> Error {
+                ErrorMessage = "found invalid moves";
+                CanViewNextMove = false;
+                Moves = invalidMoveStrings
+            }
 
-    retVal
+    parseResult

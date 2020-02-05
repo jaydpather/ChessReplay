@@ -42,17 +42,18 @@ let getAllMoves_FromModel () =
 let getAllMoves_FromText () = 
     let moveText = Data.loadAllMoves "pgns/example.pgn"
     let parseResult = Parser.parseMoveText moveText
-    match parseResult with 
-    | Ok moves -> {
-            ErrorMessage = String.Empty;
-            CanViewNextMove = true;
-            Moves = moves;
-        }
-    | Error invalidMoves -> {
-            ErrorMessage = "found invalid moves in move text";
-            CanViewNextMove = false;
-            Moves = invalidMoves;
-        }    
+    // match parseResult with 
+    // | Ok moves -> {
+    //         ErrorMessage = String.Empty;
+    //         CanViewNextMove = true;
+    //         Moves = moves;
+    //     }
+    // | Error invalidMoves -> {
+    //         ErrorMessage = "found invalid moves in move text";
+    //         CanViewNextMove = false;
+    //         Moves = invalidMoves;
+    //     }   
+    parseResult
 
 (*
 v0
