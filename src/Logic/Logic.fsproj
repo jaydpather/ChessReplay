@@ -13,6 +13,7 @@
   <ItemGroup>
     <Compile Include="Row.fs" />
     <Compile Include="Column.fs" />
+    <Compile Include="PieceType.fs" />
     <Compile Include="PieceFactory.fs" />
     <Compile Include="Parser.fs" />
     <Compile Include="Logic.fs" />

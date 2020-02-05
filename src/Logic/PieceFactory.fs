@@ -23,6 +23,7 @@ let getKnightLegalStartingPoints destPoint =
     let columnInt = Column.toInt column
     let rowInt = Row.toInt row
 
+    //todo: create these coordinates programatically
     // 2U, 1R
     let upRight = (columnInt + 1, rowInt + 2)
     // 2U, 1L
@@ -45,7 +46,20 @@ let getKnightLegalStartingPoints destPoint =
     let coords = List.fold filterNones [] coordOpts
     coords
 
+let getDefaultStartingPoints destPoint = 
+    []
+
 let createKnight () = {
     PieceType = Knight;
     GetLegalStartingPoints = getKnightLegalStartingPoints
+}
+
+let getLegalStartingPoints pieceType = 
+    match pieceType with 
+    | Knight -> getKnightLegalStartingPoints
+    | _ -> getDefaultStartingPoints
+
+let createPiece pieceType = {
+    PieceType = pieceType;
+    GetLegalStartingPoints = getLegalStartingPoints pieceType
 }

@@ -24,3 +24,15 @@ let toInt row =
     | Six -> 6
     | Seven -> 7
     | Eight -> 8
+
+let fromString str = 
+    match str with 
+    | "1" -> Some One
+    | "2" -> Some Two
+    | "3" -> Some Three
+    | "4" -> Some Four
+    | "5" -> Some Five
+    | "6" -> Some Six
+    | "7" -> Some Seven
+    | "8" -> Some Eight
+    | _ -> None

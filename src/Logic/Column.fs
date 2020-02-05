@@ -24,3 +24,15 @@ let toInt column =
     | F -> 6
     | G -> 7
     | H -> 8
+
+let fromString str = 
+    match str with 
+    | "a" -> Some A
+    | "b" -> Some B
+    | "c" -> Some C
+    | "d" -> Some D
+    | "e" -> Some E
+    | "f" -> Some F
+    | "g" -> Some G
+    | "h" -> Some H
+    | _ -> None

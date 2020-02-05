@@ -3,6 +3,8 @@ module Parser
 open System.Text.RegularExpressions
 open System
 
+open Model
+
 //todo: do we even need this function? seems like it only returns Matches where Success = true
 let private filterMatch lstResults (curMatch:Match) = 
     match curMatch.Success with
@@ -23,7 +25,7 @@ PLAN OF ACTION
         * returns a Move list    
 *)
 
-let getInvalidMoves regexPattern moveText  = 
+let private getInvalidMoves regexPattern moveText  = 
     let splitMoveText = Regex.Split(moveText, regexPattern)
     let filterBlankStrings = String.IsNullOrEmpty >> not 
     let invalidMoveStrings = 
@@ -31,7 +33,7 @@ let getInvalidMoves regexPattern moveText  =
         |> Array.toList
     invalidMoveStrings
 
-let getValidMoves regexPattern moveText = 
+let private getValidMoves regexPattern moveText = 
     let matches = Regex.Matches(moveText, regexPattern)
     let matchList = 
         matches
@@ -42,6 +44,49 @@ let getValidMoves regexPattern moveText =
     let validMoveStrings = List.map (fun (x:Match) -> x.Value) validMatches
     validMoveStrings
 
+let patternPiece = "[KQRBN]{0,1}"
+let patternColumn = "[a-h]"
+let patternRow = "[1-8]"
+let patternPlayerMove = String.Format("{0}{1}{2}", patternPiece, patternColumn, patternRow)
+
+let parsePlayerMoveString player playerMoveString = 
+    let pieceTypeStr = Regex.Match(playerMoveString, patternPiece).Value
+    let toColumnStr = Regex.Match(playerMoveString, patternColumn).Value
+    let toRowStr = Regex.Match(playerMoveString, patternRow).Value
+
+    printfn "piece type %s, column: %s, row: %s" pieceTypeStr toColumnStr toRowStr
+
+    let pieceTypeOpt = PieceType.fromString pieceTypeStr
+    let toColumnOpt = Column.fromString toColumnStr
+    let toRowOpt = Row.fromString toRowStr
+
+    let playerMove =
+        match (pieceTypeOpt, toColumnOpt, toRowOpt) with 
+        | (None, _, _) -> None
+        | (_, None, _) -> None
+        | (_, _, None) -> None
+        | (Some pieceType, Some column, Some row) -> Some {
+                Player = player;
+                PieceMoved = PieceFactory.createPiece pieceType
+                CellTo = (column, row);
+                PieceCaptured = None
+            }
+    printfn "player move: %A" playerMove
+
+
+let parseMoveString move = 
+    let firstMatch = Regex.Match(move, patternPlayerMove)
+    let firstMoveString = firstMatch.Value
+    
+    //we have to do a substring here b/c it seems like JS does not support Match.NextMatch
+    let startIndex = move.IndexOf(firstMoveString) + firstMoveString.Length
+    let remainingText = move.Substring(startIndex)
+    let secondMatch = Regex.Match(remainingText, patternPlayerMove)
+    let secondMoveString = secondMatch.Value
+    
+    (firstMoveString, secondMoveString)
+
+
 
 let parseMoveText moveText = 
     (*Currently supporting only these moves:
@@ -51,7 +96,7 @@ let parseMoveText moveText =
         * no check or checkmate
     *)
 
-    let regexPattern = "\d\. [KQRBN]{0,1}[a-h][1-8] [KQRBN]{0,1}[a-h][1-8] "
+    let regexPattern = String.Format("\d\. {0} {1} ", patternPlayerMove, patternPlayerMove)
     let invalidMoveStrings = getInvalidMoves regexPattern moveText
     let getValidMovesFunc = fun () -> getValidMoves regexPattern moveText
 
@@ -60,7 +105,14 @@ let parseMoveText moveText =
         | 0 -> getValidMovesFunc () |> Ok 
         | numErrors -> invalidMoveStrings |> Error
 
+    ////////////////////////////////////
+    
+    let foo = 
+        match retVal with 
+        | Ok moves -> 
+            let (whiteMoveStr, blackMoveStr) = parseMoveString moves.Head
+            parsePlayerMoveString White whiteMoveStr
+        | _ -> ()
+    /////////////////////////////////////    
+
     retVal
-
-
-//K (king), Q (queen), R (rook), B (bishop), and N (knight).
