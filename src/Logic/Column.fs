@@ -1,5 +1,7 @@
 module Column
 
+open System 
+
 open Model
 
 let fromInt i = 
@@ -36,3 +38,15 @@ let fromString str =
     | "g" -> Some G
     | "h" -> Some H
     | _ -> None
+
+let fromValidString str = 
+    match str with 
+    | "a" -> A
+    | "b" -> B
+    | "c" -> C
+    | "d" -> D
+    | "e" -> E
+    | "f" -> F
+    | "g" -> G
+    | "h" -> H
+    | s -> String.Format("{0} is not a valid column", s) |> failwith 

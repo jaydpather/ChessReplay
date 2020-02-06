@@ -1,5 +1,7 @@
 module Row
 
+open System
+
 open Model
 
 let fromInt i = 
@@ -36,3 +38,15 @@ let fromString str =
     | "7" -> Some Seven
     | "8" -> Some Eight
     | _ -> None
+
+let fromValidString str = 
+    match str with 
+    | "1" -> One
+    | "2" -> Two
+    | "3" -> Three
+    | "4" -> Four
+    | "5" -> Five
+    | "6" -> Six
+    | "7" -> Seven
+    | "8" -> Eight
+    | s -> String.Format("{0} is not a valid Row", s) |> failwith 
