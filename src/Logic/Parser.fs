@@ -96,6 +96,10 @@ let parseValidatedMoves validMoveStrings =
     | true -> movePairs |> Ok
     | false -> Error ["could not parse from validated moves"] //todo: how to report this error? how to include invalid moves?
 
+let checkState nextFunc state = 
+    match state with 
+    | Ok o -> nextFunc o
+    | Error e -> Error e
 
 let parseMoveText moveText = 
     (*Currently supporting only these moves:
@@ -112,12 +116,9 @@ let parseMoveText moveText =
         match invalidMoveStrings.Length with 
         | 0 -> getValidMoves regexPattern moveText |> Ok 
         | _ -> invalidMoveStrings |> Error
-    //todo: use a monad to check for failure of validation
     
     let parseResult = 
-        match validateResult with 
-        | Ok validMoveStrings -> 
-            parseValidatedMoves validMoveStrings
-        | Error e -> Error e
+        validateResult
+        |> checkState parseValidatedMoves 
 
     parseResult
