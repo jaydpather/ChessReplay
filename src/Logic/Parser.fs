@@ -5,11 +5,7 @@ open System
 
 open Model
 
-//todo: do we even need this function? seems like it only returns Matches where Success = true
-let private filterMatch lstResults (curMatch:Match) = 
-    match curMatch.Success with
-    | true -> curMatch.Value :: lstResults
-    | false -> lstResults
+//todo: split validation an parsing into 2 files
 
 let private getInvalidMoves regexPattern moveText  = 
     let splitMoveText = Regex.Split(moveText, regexPattern)
@@ -55,6 +51,7 @@ let parsePlayerMoveString player playerMoveString =
 
 
 let parseMoveString move = 
+    //todo: cleaner to use Regex.Matches instead of substring. (used substring b/c we don't have Match.NextMatch)
     let firstMatch = Regex.Match(move, patternPlayerMove)
     let firstMoveString = firstMatch.Value
     
@@ -76,7 +73,6 @@ let parseValidatedMoves validMoveStrings =
     let movePairs = 
         List.map parseMoveString validMoveStrings
         |> List.map parsePairOfPlayerMoveStrings        
-        |> List.rev
     
     Ok movePairs
 
