@@ -94,11 +94,7 @@ let parseValidatedMoves validMoveStrings =
 
     match movePairs.Length = moveOptPairs.Length with
     | true -> movePairs |> Ok
-    | false -> Error {
-            ErrorMessage = "found some invalid moves";
-            CanViewNextMove = false;
-            Moves = []
-        } //todo: how to report this error? how to include invalid moves?
+    | false -> Error ["could not parse from validated moves"] //todo: how to report this error? how to include invalid moves?
 
 
 let parseMoveText moveText = 
@@ -111,22 +107,17 @@ let parseMoveText moveText =
 
     let regexPattern = String.Format("\d\. {0} {1} ", patternPlayerMove, patternPlayerMove)
     let invalidMoveStrings = getInvalidMoves regexPattern moveText
-    let getValidMovesFunc = fun () -> getValidMoves regexPattern moveText
 
     let validateResult = 
         match invalidMoveStrings.Length with 
-        | 0 -> getValidMovesFunc () |> Ok 
-        | numErrors -> invalidMoveStrings |> Error
+        | 0 -> getValidMoves regexPattern moveText |> Ok 
+        | _ -> invalidMoveStrings |> Error
     //todo: use a monad to check for failure of validation
     
     let parseResult = 
         match validateResult with 
         | Ok validMoveStrings -> 
             parseValidatedMoves validMoveStrings
-        | Error invalidMoveStrings -> Error {
-                ErrorMessage = "found invalid moves";
-                CanViewNextMove = false;
-                Moves = invalidMoveStrings
-            }
+        | Error e -> Error e
 
     parseResult
