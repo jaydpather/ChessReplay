@@ -11,7 +11,19 @@ let convertToViewModel move (playerPieces:Map<PieceType, Piece list>) =
 
     let recordLegalMoveFuncs = List.map recordLegalMove isLegalMoveFuncs
 
-    let areLegalMoves = List.collect recordLegalMoveFuncs possibleStartPoints 
+    let rec applyAll funcList paramList = 
+        match (funcList, paramList) with 
+        | ([], _) -> []
+        | (_, []) -> []
+        | (_, _) -> 
+            let funcHead = funcList.Head
+            let paramHead = paramList.Head
+
+            let result = funcHead paramHead
+
+            result::(applyAll funcList.Tail paramList.Tail)
+
+    let areLegalMoves = applyAll recordLegalMoveFuncs possibleStartPoints 
 
     let checkIsLegalMove recordedLegalMove =
         let (_, isLegal) = recordedLegalMove
