@@ -6,9 +6,12 @@ let convertToViewModel move (playerPieces:Map<PieceType, Piece list>) =
     let possiblePieces = playerPieces.[move.PieceMoved.PieceType]
     let possibleStartPoints = List.map (fun x -> x.Position) possiblePieces
 
-    let recordLegalMove = fun isLegalMoveFunc startPos  -> (startPos, (isLegalMoveFunc startPos))
+    let recordLegalMove isLegalMoveFunc startPos  = (startPos, (isLegalMoveFunc startPos))
+    let isLegalMoveFuncs = List.map (fun piece -> piece.IsLegalMove piece.Position) possiblePieces
 
-    let areLegalMoves = List.map (recordLegalMove possiblePieces.Head.IsLegalMove) possibleStartPoints 
+    let recordLegalMoveFuncs = List.map recordLegalMove isLegalMoveFuncs
+
+    let areLegalMoves = List.collect recordLegalMoveFuncs possibleStartPoints 
 
     let checkIsLegalMove recordedLegalMove =
         let (_, isLegal) = recordedLegalMove

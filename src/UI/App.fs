@@ -25,9 +25,12 @@ btnMove.onclick <- btnMove_Click
 // Logic.getAllMoves_FromModel ()
 // |> printfn "legal starting points for Knight to A3: %s %A" Environment.NewLine
 
-let viewState = Logic.getAllMoves_FromText ()
+let board = BoardFactory.createBoard
+printfn "board: %A" board
+
+let viewState = Logic.getAllMoves_FromText board
 printfn "loaded moves from text. ViewState: %s %A" Environment.NewLine viewState
 
-printfn "board: %A" BoardFactory.createBoard
+
 
 //printfn "page loaded"

@@ -41,7 +41,7 @@ let private extractParseResult parseResult =
             InvalidMoves = invalidMoves;
         }  
 
-let convertMovesToViewModels (moves:(Move*Move) list) = 
+let convertMovesToViewModels board (moves:(Move*Move) list) = 
     printfn "moves parsed from text: %A" moves
     //step 1: flatten move list
     //step 2: iterate over flattened list with recursive function
@@ -52,7 +52,7 @@ let convertMovesToViewModels (moves:(Move*Move) list) =
         Moves = []
     }
 
-let getAllMoves_FromText () = 
+let getAllMoves_FromText board = 
     let moveText = Data.loadAllMoves "pgns/example.pgn"
     let parseResult = Parser.parseMoveText moveText
     //we can't use StateChecker.CheckState here, b/c we want to create a different kind of error instead of returning the original error back
@@ -66,7 +66,7 @@ let getAllMoves_FromText () =
 
     let retVal = 
         handledParseResult
-        |> checkState convertMovesToViewModels
+        |> checkState (convertMovesToViewModels board)
 
     retVal    
 
