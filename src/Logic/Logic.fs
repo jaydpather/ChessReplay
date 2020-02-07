@@ -41,15 +41,17 @@ let private extractParseResult parseResult =
             InvalidMoves = invalidMoves;
         }  
 
-// let tupleToList tuple = 
-//     let (a, b) = tuple
-//     [a; b]
+let tupleToList existingList tuple = 
+    let (a, b) = tuple
+    [a; b]::existingList
 
 let convertMovesToViewModels board (moves:(Move*Move) list) = 
-    printfn "moves parsed from text: %A" moves
+    //printfn "moves parsed from text: %A" moves
     //step 1: flatten move list
-    //let flattenedList = List.fold tupleToList [] moves 
-
+    let flattenedList = 
+        List.fold tupleToList [] moves 
+        |> List.rev
+    printfn "flattened moves parsed from text: %A" flattenedList
     //step 2: iterate over flattened list with recursive function
     //  * each iteration needs to produce a new dictionary for the player's moves
     //  * each iteration produces 1 ViewModel
