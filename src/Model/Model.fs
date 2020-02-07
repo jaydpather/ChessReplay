@@ -13,7 +13,7 @@ type PieceType = Pawn | Rook | Knight | Bishop | Queen | King
 type Piece = {
     PieceType: PieceType;
     Position: Coordinate;
-    GetLegalStartingPoints: Coordinate -> Coordinate list;
+    IsLegalMove: Coordinate -> Coordinate -> bool
 }
 
 //todo: move to ViewModel project

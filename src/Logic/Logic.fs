@@ -2,6 +2,7 @@
 
 open System
 
+open StateChecker
 open Model
 
 let getNextMove (moves:MoveViewModel list) = 
@@ -21,37 +22,53 @@ let getAllMoves_FromViewModel ():MoveViewModel list =
         }
     ]
 
-let private getViewModelFromModel model =
-    let legalStartingPoints = model.PieceMoved.GetLegalStartingPoints model.CellTo
-    legalStartingPoints
-    // let viewModel = {
-    //     CellTo = model.CellTo;
-    //     CellFrom = 
-    // }
-
 let getAllMoves_FromModel () =
     let model = {
         Player = White;
         CellTo = (A, Three);
-        PieceMoved = PieceFactory.createKnight ();
+        PieceMoved = PieceFactory.createPiece Knight (A,Two)
         PieceCaptured = None
     }
-    getViewModelFromModel model
+    model
 
+let private extractParseResult parseResult = 
+    match parseResult with 
+    | Ok moves -> Ok {
+            Moves = moves;
+        }
+    | Error invalidMoves -> Error {
+            ErrorMessage = "found invalid moves in move text";
+            InvalidMoves = invalidMoves;
+        }  
+
+let convertMovesToViewModels (moves:(Move*Move) list) = 
+    printfn "moves parsed from text: %A" moves
+    //step 1: flatten move list
+    //step 2: iterate over flattened list with recursive function
+    //  * each iteration needs to produce a new dictionary for the player's moves
+    //  * each iteration produces 1 ViewModel
+    //  * return value is concatenated list of ViewModels
+    Ok {
+        Moves = []
+    }
 
 let getAllMoves_FromText () = 
     let moveText = Data.loadAllMoves "pgns/example.pgn"
     let parseResult = Parser.parseMoveText moveText
-    let retVal = 
+    //we can't use StateChecker.CheckState here, b/c we want to create a different kind of error instead of returning the original error back
+    let handledParseResult = 
         match parseResult with 
-        | Ok moves -> Ok {
-                Moves = moves;
-            }
+        | Ok moves -> Ok moves
         | Error invalidMoves -> Error {
                 ErrorMessage = "found invalid moves in move text";
                 InvalidMoves = invalidMoves;
-            }   
-    retVal
+            }  
+
+    let retVal = 
+        handledParseResult
+        |> checkState convertMovesToViewModels
+
+    retVal    
 
 (*
 v0

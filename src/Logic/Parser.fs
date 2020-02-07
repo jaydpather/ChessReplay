@@ -4,6 +4,7 @@ open System.Text.RegularExpressions
 open System
 
 open Model
+open StateChecker
 
 //todo: split validation an parsing into 2 files
 
@@ -77,10 +78,7 @@ let parseValidatedMoves validMoveStrings =
     
     Ok movePairs
 
-let checkState nextFunc state = 
-    match state with 
-    | Ok o -> nextFunc o
-    | Error e -> Error e
+
 
 
 let validateMoveText moveText = 

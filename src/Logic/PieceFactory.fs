@@ -1,5 +1,7 @@
 module PieceFactory
 
+open System
+
 open Model
 
 
@@ -46,28 +48,36 @@ let getKnightLegalStartingPoints destPoint =
     let coords = List.fold filterNones [] coordOpts
     coords
 
-let getDefaultStartingPoints destPoint = 
-    []
+let isLegalMove_Knight source dest = 
+    let (iSourceCol, iSourceRow) = Coordinate.toInts source
+    let (iDestCol, iDestRow) = Coordinate.toInts dest
+    
+    let colDiff = iDestCol - iSourceCol
+    let rowDiff = iDestRow - iSourceRow
 
-let createKnight () = {
-    PieceType = Knight;
-    GetLegalStartingPoints = getKnightLegalStartingPoints;
-    Position = (A, Three)
-}
+    let absColDiff = Math.Abs(colDiff)
+    let absRowDiff = Math.Abs(rowDiff)
 
-let getLegalStartingPoints pieceType = 
+    let sum = absColDiff + absRowDiff
+
+    sum = 3
+
+let isLegalMove_Default source dest =
+    true
+
+let getIsLegalMoveFunc pieceType = 
     match pieceType with 
-    | Knight -> getKnightLegalStartingPoints
-    | _ -> getDefaultStartingPoints
+    | Knight -> isLegalMove_Knight
+    | _ -> isLegalMove_Default
 
 let createPiece_Old pieceType = {
     PieceType = pieceType;
-    GetLegalStartingPoints = getLegalStartingPoints pieceType;
-    Position = (A, Three)
+    Position = (A, Three);
+    IsLegalMove = isLegalMove_Default;
 }
 
 let createPiece pieceType position = {
     PieceType = pieceType;
     Position = position;
-    GetLegalStartingPoints = getLegalStartingPoints pieceType;
+    IsLegalMove = getIsLegalMoveFunc pieceType
 }
