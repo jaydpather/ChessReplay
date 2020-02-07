@@ -25,7 +25,7 @@ type MoveViewModel = {
 type Move = {
     Player: Player;
     CellTo: Coordinate;
-    PieceMoved: Piece;
+    PieceMoved: Piece; //todo: this needs to become PieceType. we can't create the Piece here b/c we don't know it's position when we create the Move (in parsePlayerMoveString)
     PieceCaptured: PieceType option;
 }
 
