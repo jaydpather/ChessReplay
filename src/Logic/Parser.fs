@@ -32,6 +32,7 @@ let patternRow = "[1-8]"
 let patternPlayerMove = String.Format("{0}{1}{2}", patternPiece, patternColumn, patternRow)
 
 let parsePlayerMoveString player playerMoveString = 
+    //todo: use Match.Captures property to get all parts of string at once
     let pieceTypeStr = Regex.Match(playerMoveString, patternPiece).Value
     let toColumnStr = Regex.Match(playerMoveString, patternColumn).Value
     let toRowStr = Regex.Match(playerMoveString, patternRow).Value
@@ -44,7 +45,7 @@ let parsePlayerMoveString player playerMoveString =
 
     {
         Player = player;
-        PieceMoved = PieceFactory.createPiece pieceType
+        PieceMoved = PieceFactory.createPiece_Old pieceType
         CellTo = (column, row);
         PieceCaptured = None
     }
@@ -81,6 +82,18 @@ let checkState nextFunc state =
     | Ok o -> nextFunc o
     | Error e -> Error e
 
+
+let validateMoveText moveText = 
+    let regexPattern = String.Format("\d\. {0} {1} ", patternPlayerMove, patternPlayerMove)
+    let invalidMoveStrings = getInvalidMoves regexPattern moveText
+
+    let validateResult = 
+        match invalidMoveStrings.Length with 
+        | 0 -> getValidMoves regexPattern moveText |> Ok 
+        | _ -> invalidMoveStrings |> Error
+
+    validateResult    
+
 let parseMoveText moveText = 
     (*Currently supporting only these moves:
         * next turn is white
@@ -89,16 +102,8 @@ let parseMoveText moveText =
         * no check or checkmate
     *)
     try
-        let regexPattern = String.Format("\d\. {0} {1} ", patternPlayerMove, patternPlayerMove)
-        let invalidMoveStrings = getInvalidMoves regexPattern moveText
-
-        let validateResult = 
-            match invalidMoveStrings.Length with 
-            | 0 -> getValidMoves regexPattern moveText |> Ok 
-            | _ -> invalidMoveStrings |> Error
-        
         let parseResult = 
-            validateResult
+            validateMoveText moveText
             |> checkState parseValidatedMoves 
 
         parseResult

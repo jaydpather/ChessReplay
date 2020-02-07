@@ -16,6 +16,8 @@
     <Compile Include="PieceType.fs" />
     <Compile Include="PieceFactory.fs" />
     <Compile Include="Parser.fs" />
+    <Compile Include="CoordCalc.fs" />
+    <Compile Include="BoardFactory.fs" />
     <Compile Include="Logic.fs" />
   </ItemGroup>
 </Project>

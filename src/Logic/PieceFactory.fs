@@ -51,7 +51,8 @@ let getDefaultStartingPoints destPoint =
 
 let createKnight () = {
     PieceType = Knight;
-    GetLegalStartingPoints = getKnightLegalStartingPoints
+    GetLegalStartingPoints = getKnightLegalStartingPoints;
+    Position = (A, Three)
 }
 
 let getLegalStartingPoints pieceType = 
@@ -59,7 +60,14 @@ let getLegalStartingPoints pieceType =
     | Knight -> getKnightLegalStartingPoints
     | _ -> getDefaultStartingPoints
 
-let createPiece pieceType = {
+let createPiece_Old pieceType = {
     PieceType = pieceType;
-    GetLegalStartingPoints = getLegalStartingPoints pieceType
+    GetLegalStartingPoints = getLegalStartingPoints pieceType;
+    Position = (A, Three)
+}
+
+let createPiece pieceType position = {
+    PieceType = pieceType;
+    Position = position;
+    GetLegalStartingPoints = getLegalStartingPoints pieceType;
 }

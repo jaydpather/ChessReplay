@@ -21,14 +21,13 @@ let btnMove_Click e =
 let btnMove:Browser.Types.HTMLButtonElement = DOM.getButtonElementById "btnMove"
 btnMove.onclick <- btnMove_Click
 
-let allMoves = Logic.getAllMoves_FromViewModel ()
-allMoves.ToString()
-|> printfn "all moves (from view model): %s %s" Environment.NewLine
 
-Logic.getAllMoves_FromModel ()
-|> printfn "legal starting points for Knight to A3: %s %A" Environment.NewLine
+// Logic.getAllMoves_FromModel ()
+// |> printfn "legal starting points for Knight to A3: %s %A" Environment.NewLine
 
-let viewState = Logic.getAllMoves_FromText ()
-printfn "loaded moves from text. ViewState: %s %A" Environment.NewLine viewState
+// let viewState = Logic.getAllMoves_FromText ()
+// printfn "loaded moves from text. ViewState: %s %A" Environment.NewLine viewState
+
+printfn "board: %A" BoardFactory.createBoard
 
 //printfn "page loaded"
