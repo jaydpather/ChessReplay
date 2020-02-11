@@ -48,21 +48,13 @@ let tupleToList (existingList:List<Move>) tuple =
 
 
 let convertMovesToViewModels (board:Map<Player,Map<PieceType, Piece list>>) (moves:(Move*Move) list) = 
-    //step 1: flatten move list
     let flattenedList = 
         List.fold tupleToList [] moves 
 
-    let player = flattenedList.Head.Player
-    let playerPieces = board.[player]
+    let moves = CoordCalc.convertToViewModels flattenedList board
 
-    let firstMove = CoordCalc.convertToViewModel flattenedList.Head playerPieces
-
-    //step 2: iterate over flattened list with recursive function
-    //  * each iteration needs to produce a new dictionary for the player's moves
-    //  * each iteration produces 1 ViewModel
-    //  * return value is concatenated list of ViewModels
     Ok {
-        Moves = [firstMove]
+        Moves = moves
     }
 
 let getAllMoves_FromText board = 

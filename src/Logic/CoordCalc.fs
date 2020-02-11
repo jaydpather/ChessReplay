@@ -51,7 +51,27 @@ let convertToViewModel move (playerPieces:Map<PieceType, Piece list>) =
         //todo: handle case of 0. (error case)
         | _ -> findLegalPieceMoved possiblePieces move.CellTo
 
-    {
-        CellFrom = pieceMoved.Position
-        CellTo = move.CellTo
-    }
+    let viewModel = {
+            CellFrom = pieceMoved.Position
+            CellTo = move.CellTo
+        }
+    (viewModel, pieceMoved)    
+
+let rec convertToViewModels moves (board:Map<Player, Map<PieceType, Piece list>>) = 
+    match moves with 
+    | [] -> []
+    | curMove::remainingMoves -> 
+        let playerPieces = board.[curMove.Player]
+        let (viewModel, pieceMoved) = convertToViewModel moves.Head playerPieces
+
+        //now construct new board, first by creating a new Piece with new Position, then working up the data structures all the way to the board
+        let newPiece = { pieceMoved with 
+                            Position = viewModel.CellTo}
+        let otherPieces = List.filter (fun x -> not (LanguagePrimitives.PhysicalEquality pieceMoved x)) playerPieces.[curMove.PieceTypeMoved]
+        let newPieceList = newPiece :: otherPieces
+        let newPlayerPieces = playerPieces.Remove(curMove.PieceTypeMoved)
+                                .Add(curMove.PieceTypeMoved, newPieceList)
+        let newBoard = board.Remove(curMove.Player)
+                                .Add(curMove.Player, newPlayerPieces)
+
+        List.append [viewModel] (convertToViewModels remainingMoves newBoard)
