@@ -3,33 +3,51 @@ module CoordCalc
 open System
 open Model
 
-let isLegalMove_Knight dest source = 
+let getColAndRowDiff move source = 
+    let dest = move.CellTo
     let (iSourceCol, iSourceRow) = Coordinate.toInts source
     let (iDestCol, iDestRow) = Coordinate.toInts dest
     
     let colDiff = iDestCol - iSourceCol
     let rowDiff = iDestRow - iSourceRow
+    (colDiff, rowDiff)
+
+let isLegalMove_Pawn move source = 
+    let (colDiff, rowDiff) = getColAndRowDiff move source
+    let colsMatch = colDiff = 0 //we aren't handling captures yet, so Pawns can only move forward
+    let expectedRowDiffs = 
+        match move.Player with 
+        | White -> [1; 2] //todo: only allow row diff of 2 if it's the first move!
+        | Black -> [-1; -2]
+
+    let isRowValid = List.contains rowDiff expectedRowDiffs
+
+    (colsMatch && isRowValid)    
+
+let isLegalMove_Knight move source = 
+    let (colDiff, rowDiff) = getColAndRowDiff move source
 
     let absColDiff = Math.Abs(colDiff)
     let absRowDiff = Math.Abs(rowDiff)
 
     let sum = absColDiff + absRowDiff
-
     sum = 3
 
-let isLegalMove_Default dest source =
+let isLegalMove_Default move source =
     true
 
-let isLegalMove dest piece = 
+let isLegalMove move piece = 
     match piece.PieceType with 
-    | Knight -> isLegalMove_Knight dest piece.Position
-    | _ -> isLegalMove_Default dest piece.Position
+    | Knight -> isLegalMove_Knight move piece.Position
+    | Pawn -> isLegalMove_Pawn move piece.Position
+    | _ -> isLegalMove_Default move piece.Position
 
-let recordLegalMove dest piece = 
-    (piece, isLegalMove dest piece)
+let recordLegalMove move piece = 
+    (piece, isLegalMove move piece)
 
-let findLegalPieceMoved possiblePieces dest =
-    let areLegalMoves = List.map (recordLegalMove dest) possiblePieces
+let findLegalPieceMoved possiblePieces move =
+    //todo: just return the piece that was moved. don't return bool and then record which pieces were true/false
+    let areLegalMoves = List.map (recordLegalMove move) possiblePieces
     let checkLegalMove recordedLegalMove = 
         let (_, isLegal) = recordedLegalMove
         isLegal
@@ -49,7 +67,7 @@ let convertToViewModel move (playerPieces:Map<PieceType, Piece list>) =
         match possiblePieces.Length with 
         | 1 -> possiblePieces.Head
         //todo: handle case of 0. (error case)
-        | _ -> findLegalPieceMoved possiblePieces move.CellTo
+        | _ -> findLegalPieceMoved possiblePieces move
 
     let viewModel = {
             CellFrom = pieceMoved.Position
