@@ -12,6 +12,12 @@ let getColAndRowDiff move source =
     let rowDiff = iDestRow - iSourceRow
     (colDiff, rowDiff)
 
+let isLegalMove_Bishop move source = 
+    let (colDiff, rowDiff) = getColAndRowDiff move source
+    let absColDiff = Math.Abs(colDiff)
+    let absRowDiff = Math.Abs(rowDiff)
+    absColDiff = absRowDiff
+
 let isLegalMove_Pawn move source = 
     let (colDiff, rowDiff) = getColAndRowDiff move source
     let colsMatch = colDiff = 0 //we aren't handling captures yet, so Pawns can only move forward
