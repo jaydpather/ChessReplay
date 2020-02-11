@@ -6,14 +6,16 @@ open Fable.Import
 open Model
 
 let board = BoardFactory.createBoard
-printfn "board: %A" board
+//printfn "board: %A" board
 
 let result = Logic.getAllMoves_FromText board
 
 let moveListToUse = 
     match result with 
     | Ok viewState -> viewState.Moves
-    | Error _ -> []
+    | Error e ->
+        printfn "invalid move text: %A" e 
+        []
 
 let mutable moveList: MoveViewModel list = moveListToUse
 

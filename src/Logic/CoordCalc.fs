@@ -46,6 +46,7 @@ let isLegalMove move piece =
     match piece.PieceType with 
     | Knight -> isLegalMove_Knight move piece.Position
     | Pawn -> isLegalMove_Pawn move piece.Position
+    | Bishop -> isLegalMove_Bishop move piece.Position
     | _ -> isLegalMove_Default move piece.Position
 
 let recordLegalMove move piece = 
