@@ -15,7 +15,6 @@
     <Compile Include="Column.fs" />
     <Compile Include="Coordinate.fs" />
     <Compile Include="PieceType.fs" />
-    <Compile Include="PieceFactory.fs" />
     <Compile Include="StateChecker.fs" />
     <Compile Include="Parser.fs" />
     <Compile Include="CoordCalc.fs" />

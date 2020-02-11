@@ -1,40 +1,57 @@
 module CoordCalc
 
+open System
 open Model
 
-let convertToViewModel move (playerPieces:Map<PieceType, Piece list>) = 
-    let possiblePieces = playerPieces.[move.PieceMoved.PieceType]
-    let possibleStartPoints = List.map (fun x -> x.Position) possiblePieces
+let isLegalMove_Knight dest source = 
+    let (iSourceCol, iSourceRow) = Coordinate.toInts source
+    let (iDestCol, iDestRow) = Coordinate.toInts dest
+    
+    let colDiff = iDestCol - iSourceCol
+    let rowDiff = iDestRow - iSourceRow
 
-    let recordLegalMove isLegalMoveFunc startPos  = (startPos, (isLegalMoveFunc startPos))
-    let isLegalMoveFuncs = List.map (fun piece -> piece.IsLegalMove piece.Position) possiblePieces
+    let absColDiff = Math.Abs(colDiff)
+    let absRowDiff = Math.Abs(rowDiff)
 
-    let recordLegalMoveFuncs = List.map recordLegalMove isLegalMoveFuncs
+    let sum = absColDiff + absRowDiff
 
-    let rec applyAll funcList paramList = 
-        match (funcList, paramList) with 
-        | ([], _) -> []
-        | (_, []) -> []
-        | (_, _) -> 
-            let funcHead = funcList.Head
-            let paramHead = paramList.Head
+    sum = 3
 
-            let result = funcHead paramHead
+let isLegalMove_Default dest source =
+    true
 
-            result::(applyAll funcList.Tail paramList.Tail)
+let isLegalMove dest piece = 
+    match piece.PieceType with 
+    | Knight -> isLegalMove_Knight dest piece.Position
+    | _ -> isLegalMove_Default dest piece.Position
 
-    let areLegalMoves = applyAll recordLegalMoveFuncs possibleStartPoints 
+let recordLegalMove dest piece = 
+    (piece, isLegalMove dest piece)
 
-    let checkIsLegalMove recordedLegalMove =
+let findLegalPieceMoved possiblePieces dest =
+    let areLegalMoves = List.map (recordLegalMove dest) possiblePieces
+    let checkLegalMove recordedLegalMove = 
         let (_, isLegal) = recordedLegalMove
         isLegal
+    let legalMoves = List.filter (checkLegalMove) areLegalMoves
 
-    let legalMoveList = List.filter checkIsLegalMove areLegalMoves
-    let onlyLegalMove = legalMoveList.Head
+    let (piece, _) = legalMoves.Head //todo: handle error case, where list has more than 1 item
+    piece
 
-    let (sourceCoord, _) = onlyLegalMove
+let convertToViewModel move (playerPieces:Map<PieceType, Piece list>) = 
+    //this func needs to determine the source coordinate of the move
+    //to do that, we need to determine which Piece object was moved.
+    //  * the player could have 2 Knights, 2 Bishops, etc.
+    //  * there should only be 1 piece of each type that is in a legal position to move  to the destination
+    //  * in the case that the player only has 1 Knight, Bishop, etc., then we automatically know which piece was moved
+    let possiblePieces = playerPieces.[move.PieceTypeMoved]
+    let pieceMoved =  
+        match possiblePieces.Length with 
+        | 1 -> possiblePieces.Head
+        //todo: handle case of 0. (error case)
+        | _ -> findLegalPieceMoved possiblePieces move.CellTo
 
     {
-        CellFrom = sourceCoord
+        CellFrom = pieceMoved.Position
         CellTo = move.CellTo
     }

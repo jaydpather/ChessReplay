@@ -5,7 +5,11 @@ open System
 open Model
 
 let private createPieces pieceType coords = 
-    List.map (PieceFactory.createPiece pieceType) coords
+    let createPiece pieceType coord = {
+            PieceType = pieceType;
+            Position = coord;
+        }
+    List.map (createPiece pieceType) coords
 
 let createBoard =
     //board will be map of Player -> (map of PieceType -> Piece list)

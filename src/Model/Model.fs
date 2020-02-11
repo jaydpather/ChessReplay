@@ -13,7 +13,6 @@ type PieceType = Pawn | Rook | Knight | Bishop | Queen | King
 type Piece = {
     PieceType: PieceType;
     Position: Coordinate;
-    IsLegalMove: Coordinate -> Coordinate -> bool
 }
 
 //todo: move to ViewModel project
@@ -25,12 +24,12 @@ type MoveViewModel = {
 type Move = {
     Player: Player;
     CellTo: Coordinate;
-    PieceMoved: Piece; //todo: this needs to become PieceType. we can't create the Piece here b/c we don't know it's position when we create the Move (in parsePlayerMoveString)
-    PieceCaptured: PieceType option;
+    PieceTypeMoved: PieceType;
+    PieceTypeCaptured: PieceType option;
 }
 
 type ViewState = {
-    Moves: (Move * Move) list;
+    Moves: MoveViewModel list;
 }
 
 type ViewErrorState = {

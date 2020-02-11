@@ -46,9 +46,9 @@ let parsePlayerMoveString player playerMoveString =
 
     {
         Player = player;
-        PieceMoved = PieceFactory.createPiece_Old pieceType
+        PieceTypeMoved = pieceType
         CellTo = (column, row);
-        PieceCaptured = None
+        PieceTypeCaptured = None
     }
 
 

@@ -26,8 +26,8 @@ let getAllMoves_FromModel () =
     let model = {
         Player = White;
         CellTo = (A, Three);
-        PieceMoved = PieceFactory.createPiece Knight (A,Two)
-        PieceCaptured = None
+        PieceTypeMoved = Knight;
+        PieceTypeCaptured = None;
     }
     model
 
@@ -41,23 +41,28 @@ let private extractParseResult parseResult =
             InvalidMoves = invalidMoves;
         }  
 
-let tupleToList existingList tuple = 
+let tupleToList (existingList:List<Move>) tuple = 
     let (a, b) = tuple
-    [a; b]::existingList
+    let flattenedTuple = [a; b]
+    List.append existingList flattenedTuple 
 
-let convertMovesToViewModels board (moves:(Move*Move) list) = 
-    //printfn "moves parsed from text: %A" moves
+
+let convertMovesToViewModels (board:Map<Player,Map<PieceType, Piece list>>) (moves:(Move*Move) list) = 
     //step 1: flatten move list
     let flattenedList = 
         List.fold tupleToList [] moves 
-        |> List.rev
-    printfn "flattened moves parsed from text: %A" flattenedList
+
+    let player = flattenedList.Head.Player
+    let playerPieces = board.[player]
+
+    let firstMove = CoordCalc.convertToViewModel flattenedList.Head playerPieces
+
     //step 2: iterate over flattened list with recursive function
     //  * each iteration needs to produce a new dictionary for the player's moves
     //  * each iteration produces 1 ViewModel
     //  * return value is concatenated list of ViewModels
     Ok {
-        Moves = []
+        Moves = [firstMove]
     }
 
 let getAllMoves_FromText board = 

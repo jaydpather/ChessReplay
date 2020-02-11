@@ -5,7 +5,17 @@ open Fable.Import
 
 open Model
 
-let mutable moveList: MoveViewModel list = Logic.getAllMoves_FromViewModel ()
+let board = BoardFactory.createBoard
+printfn "board: %A" board
+
+let result = Logic.getAllMoves_FromText board
+
+let moveListToUse = 
+    match result with 
+    | Ok viewState -> viewState.Moves
+    | Error _ -> []
+
+let mutable moveList: MoveViewModel list = moveListToUse
 
 let executeNextMove () = 
     let (nextMove, remainingMoves) = Logic.getNextMove moveList
@@ -24,13 +34,6 @@ btnMove.onclick <- btnMove_Click
 
 // Logic.getAllMoves_FromModel ()
 // |> printfn "legal starting points for Knight to A3: %s %A" Environment.NewLine
-
-let board = BoardFactory.createBoard
-printfn "board: %A" board
-
-let viewState = Logic.getAllMoves_FromText board
-printfn "loaded moves from text. ViewState: %s %A" Environment.NewLine viewState
-
 
 
 //printfn "page loaded"
