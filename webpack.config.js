@@ -2,9 +2,9 @@ var path = require("path");
  
 module.exports = {
     mode: "development",
-    entry: "C:\\Users\\jaydp\\Documents\\Github\\Fable\\ChessReplay\\src\\UI\\App.fsproj",
+    entry: path.join(__dirname, "./src/UI/App.fsproj"),
     output: {
-        path: "C:\\Users\\jaydp\\Documents\\Github\\Fable\\ChessReplay\\public",
+        path: path.join(__dirname, "./public"),
         filename: "bundle.js",
     },
     devServer: {

@@ -1,11 +1,16 @@
 # FirstFableProject
 
+## Setup
 Install Paket: https://fsprojects.github.io/Paket/get-started.html
-Download packages: dotnet paket install
+Download packages: `dotnet paket install`
 
 build script must start with these 2 lines:
 dotnet tool restore
 dotnet paket restore
+
+Install npm dependencies: `npm install`
+Run webpack-dev-server: `npm start`
+View on: `http://localhost:8080`
 
 __________________________________________________
 TODO:
